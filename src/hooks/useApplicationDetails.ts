@@ -1,18 +1,14 @@
 import { useState } from "react";
 import type { Application } from "../mock/applications";
-
-interface Document {
-  id: string;
-  name: string;
-  status: "verified" | "pending" | "missing";
-}
+import { applicationDetailsMock } from "../mock/details";
+import type { Document } from "../types/document";
 
 export function useApplicationDetails(application: Application) {
-  const [documents, setDocuments] = useState<Document[]>([
-    { id: "1", name: "National ID", status: "verified" },
-    { id: "2", name: "Bank Statement", status: "pending" },
-    { id: "3", name: "Salary Letter", status: "verified" },
-  ]);
+
+  const initialDocs =
+  applicationDetailsMock[application.id]?.documents || [];
+
+  const [documents, setDocuments] = useState<Document[]>(initialDocs);
 
   const [notes, setNotes] = useState("");
 
