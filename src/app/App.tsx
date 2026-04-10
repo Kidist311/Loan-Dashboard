@@ -1,4 +1,4 @@
-// App.tsx
+
 import React from "react";
 import { useApplications } from "../hooks/useApplications";
 import { ApplicationDetails } from "../pages/ApplicationDetails";
@@ -13,6 +13,7 @@ export default function App() {
     goBack,
     approve,
     reject,
+    resetData,
   } = useApplications();
 
   return selectedApplication ? (
@@ -26,6 +27,7 @@ export default function App() {
     <ApplicationsPage
       applications={applications}
       onSelectApplication={selectApplication}
+      resetData={resetData}
     />
   );
 }

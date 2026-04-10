@@ -10,11 +10,13 @@ import { useApplicationFilter } from "../hooks/useApplicationFilter.ts     useAp
 interface Props {
   onSelectApplication: (application: Application) => void;
   applications: Application[];
+  resetData: () => void;
 }
 
 export default function ApplicationsPage({
   onSelectApplication,
   applications,
+  resetData,
 }: Props) {
   const {
     searchQuery,
@@ -29,11 +31,20 @@ export default function ApplicationsPage({
     <div className="min-h-screen bg-[#fafafa]">
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Header */}
-        <div className="mb-8 py-5">
+        <div className="  flex items-start justify-between">
+        <div className="mb-4 ">
           <h1 className="text-[#051F20] mb-2 text-4xl font-bold">Kifiya Loan Dashboard</h1>
           <p className="text-[#163832]/70">
             Review and manage loan applications
           </p>
+        </div>
+
+        <button
+            onClick={resetData}
+            className="px-4 py-2 bg-[#125e61] hover:bg-[#4e7f81] text-sm  text-white rounded-lg transition"
+          >
+            Reset Data
+        </button>
         </div>
 
         {/* Stats */}
