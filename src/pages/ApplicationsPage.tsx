@@ -6,6 +6,7 @@ import type { Application } from "../mock/applications";
 import { useApplicationFilter } from "../hooks/useApplicationFilter.ts     useApplicationDetails";
 
 
+
 interface Props {
   onSelectApplication: (application: Application) => void;
   applications: Application[];
@@ -28,8 +29,8 @@ export default function ApplicationsPage({
     <div className="min-h-screen bg-[#fafafa]">
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-[#051F20] mb-2">Mini Loan Dashboard</h1>
+        <div className="mb-8 py-5">
+          <h1 className="text-[#051F20] mb-2 text-4xl font-bold">Kifiya Loan Dashboard</h1>
           <p className="text-[#163832]/70">
             Review and manage loan applications
           </p>

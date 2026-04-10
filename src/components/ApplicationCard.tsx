@@ -23,7 +23,7 @@ export function ApplicationCard({ application, onClick }: Props) {
   return (
     <div
       onClick={onClick}
-      className="border p-4 mb-3 rounded-lg cursor-pointer hover:shadow-md transition-shadow flex justify-between items-center"
+      className="border p-4 mb-3 rounded-lg cursor-pointer hover:shadow-md shadow-[#5c7d74] transition-shadow flex justify-between items-center"
     >
       <div>
         <h3 className="font-semibold">{application.name}</h3>
