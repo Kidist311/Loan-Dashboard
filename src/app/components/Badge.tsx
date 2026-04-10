@@ -1,3 +1,5 @@
+import React from "react";
+
 interface BadgeProps {
   children: React.ReactNode;
   variant?: 'pending' | 'approved' | 'rejected' | 'verified' | 'missing' | 'low' | 'medium' | 'high';

@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowLeft, FileText, AlertTriangle, Check, X } from 'lucide-react';
 import { Badge } from '../components/Badge';
-
+import type { Application } from '../mock/applications';
 import React from 'react';
-import { Application } from '../mock/applications';
 
 interface Document {
   id: string;
@@ -14,9 +13,16 @@ interface Document {
 interface ApplicationDetailsProps {
   application: Application;
   onBack: () => void;
+  onApprove: (appId: string) => void;
+  onReject: (appId: string) => void;
 }
 
-export function ApplicationDetails({ application, onBack }: ApplicationDetailsProps) {
+export function ApplicationDetails({
+  application,
+  onBack,
+  onApprove,
+  onReject
+}: ApplicationDetailsProps) {
   const [documents, setDocuments] = useState<Document[]>([
     { id: '1', name: 'National ID', status: 'verified' },
     { id: '2', name: 'Bank Statement', status: 'pending' },
@@ -24,6 +30,7 @@ export function ApplicationDetails({ application, onBack }: ApplicationDetailsPr
   ]);
   const [notes, setNotes] = useState('');
 
+  // Dynamically compute risk indicators
   const riskIndicators = [
     {
       show: application.creditScore < 650,
@@ -59,6 +66,7 @@ export function ApplicationDetails({ application, onBack }: ApplicationDetailsPr
   return (
     <div className="min-h-screen bg-[#fafafa]">
       <div className="max-w-4xl mx-auto px-6 py-8">
+        {/* Back Button */}
         <button
           onClick={onBack}
           className="flex items-center gap-2 text-[#163832] hover:text-[#235347] mb-8 transition-colors group"
@@ -67,6 +75,7 @@ export function ApplicationDetails({ application, onBack }: ApplicationDetailsPr
           Back to Applications
         </button>
 
+        {/* Header */}
         <div className="mb-8 p-6 bg-gradient-to-br from-[#235347] to-[#163832] rounded-xl text-white shadow-lg">
           <div className="flex items-start justify-between">
             <div>
@@ -135,13 +144,7 @@ export function ApplicationDetails({ application, onBack }: ApplicationDetailsPr
                       />
                     </div>
                     <div className="flex-1">
-                      <div
-                        className={
-                          indicator.severity === 'high'
-                            ? 'text-red-900'
-                            : 'text-[#f59e0b]'
-                        }
-                      >
+                      <div className={indicator.severity === 'high' ? 'text-red-900' : 'text-[#f59e0b]'}>
                         {indicator.message}
                       </div>
                     </div>
@@ -178,6 +181,7 @@ export function ApplicationDetails({ application, onBack }: ApplicationDetailsPr
                 </div>
               ))}
             </div>
+
             <div>
               <label className="block text-[#051F20] mb-3">Notes</label>
               <textarea
@@ -192,11 +196,17 @@ export function ApplicationDetails({ application, onBack }: ApplicationDetailsPr
 
           {/* Actions */}
           <div className="sticky bottom-6 flex gap-4 bg-white border-2 border-gray-200 rounded-xl p-6 shadow-2xl">
-            <button className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-br from-[#8EB69B] to-[#235347] text-white rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+            <button
+              onClick={() => onApprove(application.id)}
+              className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-br from-[#8EB69B] to-[#235347] text-white rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+            >
               <Check className="w-5 h-5" />
               Approve Application
             </button>
-            <button className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-br from-red-600 to-red-700 text-white rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+            <button
+              onClick={() => onReject(application.id)}
+              className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-br from-red-600 to-red-700 text-white rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+            >
               <X className="w-5 h-5" />
               Reject Application
             </button>

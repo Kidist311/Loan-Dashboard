@@ -6,25 +6,28 @@ import { mockApplications, Application } from '../mock/applications';
 import React from 'react';
 
 interface Props {
-  onSelectApplication: (application: Application) => void;
-}
-
-export default function ApplicationsList({ onSelectApplication }: Props) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
-
-  const filteredApplications = mockApplications.filter(app => {
-    const matchesSearch = app.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || app.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
-
-  const stats = {
-    pending: mockApplications.filter(app => app.status === 'pending').length,
-    approved: mockApplications.filter(app => app.status === 'approved').length,
-    rejected: mockApplications.filter(app => app.status === 'rejected').length,
-    total: mockApplications.length,
-  };
+    onSelectApplication: (application: Application) => void;
+    applications: Application[];
+  }
+  
+  export default function ApplicationsPage({ onSelectApplication, applications }: Props) {
+    const [searchQuery, setSearchQuery] = useState('');
+    const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
+  
+    const filteredApplications = applications.filter(app => {
+      const matchesSearch = app.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesStatus = statusFilter === 'all' || app.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
+  
+    const stats = {
+      pending: applications.filter(app => app.status === 'pending').length,
+      approved: applications.filter(app => app.status === 'approved').length,
+      rejected: applications.filter(app => app.status === 'rejected').length,
+      total: applications.length,
+    };
+  
+  // rest of your component stays the same...
 
   return (
     <div className="min-h-screen bg-[#fafafa]">
@@ -110,5 +113,6 @@ export default function ApplicationsList({ onSelectApplication }: Props) {
         )}
       </div>
     </div>
-  );
-}
+    );
+  
+  }
