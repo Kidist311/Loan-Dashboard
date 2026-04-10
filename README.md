@@ -13,13 +13,14 @@ LocalStorage (for persistence)
 
 ## Project Structure
 
+```bash
 src/
 │
 ├── app/
 │   └── App.tsx
 │
 ├── components/
-|   |--- ui/
+│   ├── ui/
 │   ├── ApplicationCard.tsx
 │   └── Badge.tsx
 │
@@ -37,7 +38,7 @@ src/
 │   └── details.ts
 │
 ├── types/
-│   ├── application.ts
+│   └── application.ts
 │
 └── styles/
 
