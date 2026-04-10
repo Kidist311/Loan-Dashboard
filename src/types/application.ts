@@ -8,11 +8,4 @@ export interface Application {
     creditScore: number;
   }
 
- export interface Document {
-    id: string;
-    name: string;
-    status: "verified" | "pending" | "missing";
-  }
-
-  export type Status = "pending" | "approved" | "rejected";
-export type Risk = "low" | "medium" | "high";
+ 
