@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Application } from "../mock/applications";
 import { applicationDetailsMock } from "../mock/details";
-import type { Document } from "../types/document";
+import type { Document } from "../types/application";
 
 export function useApplicationDetails(application: Application) {
 

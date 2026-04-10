@@ -1,5 +1,5 @@
 
-import type { Document } from "../types/document";
+import type { Document } from "../types/application";
 
 export const applicationDetailsMock: Record<
   string,
