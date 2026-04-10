@@ -1,14 +1,8 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
 import { ArrowLeft, FileText, AlertTriangle, Check, X } from 'lucide-react';
 import { Badge } from '../components/Badge';
 import type { Application } from '../mock/applications';
-import React from 'react';
-
-interface Document {
-  id: string;
-  name: string;
-  status: 'verified' | 'pending' | 'missing';
-}
+import { useApplicationDetails } from '../hooks/useApplicationDetails';
 
 interface ApplicationDetailsProps {
   application: Application;
@@ -23,45 +17,15 @@ export function ApplicationDetails({
   onApprove,
   onReject
 }: ApplicationDetailsProps) {
-  const [documents, setDocuments] = useState<Document[]>([
-    { id: '1', name: 'National ID', status: 'verified' },
-    { id: '2', name: 'Bank Statement', status: 'pending' },
-    { id: '3', name: 'Salary Letter', status: 'verified' },
-  ]);
-  const [notes, setNotes] = useState('');
 
-  // Dynamically compute risk indicators
-  const riskIndicators = [
-    {
-      show: application.creditScore < 650,
-      message: 'Credit score below 650',
-      severity: 'high' as const,
-    },
-    {
-      show: application.amount > application.income * 5,
-      message: 'Loan amount exceeds 5× monthly income',
-      severity: 'high' as const,
-    },
-    {
-      show: documents.some((doc) => doc.status === 'missing'),
-      message: 'Missing required documents',
-      severity: 'medium' as const,
-    },
-  ].filter((indicator) => indicator.show);
-
-  const toggleDocumentStatus = (docId: string) => {
-    setDocuments((prev) =>
-      prev.map((doc) => {
-        if (doc.id === docId) {
-          return {
-            ...doc,
-            status: doc.status === 'verified' ? 'pending' : 'verified',
-          };
-        }
-        return doc;
-      })
-    );
-  };
+  // ✅ moved all logic into hook
+  const {
+    documents,
+    notes,
+    setNotes,
+    toggleDocumentStatus,
+    riskIndicators,
+  } = useApplicationDetails(application);
 
   return (
     <div className="min-h-screen bg-[#fafafa]">

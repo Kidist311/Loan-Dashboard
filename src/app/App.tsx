@@ -1,52 +1,31 @@
 // App.tsx
-import React, { useState } from 'react';
-import ApplicationsPage from './pages/ApplicationsPage';
-import { ApplicationDetails } from './pages/ApplicationDetails';
-import { mockApplications, Application } from './mock/applications';
+import React from "react";
+import { useApplications } from "../hooks/useApplications";
+import { ApplicationDetails } from "../pages/ApplicationDetails";
+import ApplicationsPage from "../pages/ApplicationsPage";
+
 
 export default function App() {
-  const [applications, setApplications] = useState<Application[]>(mockApplications);
-  const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
-
-  const handleSelectApplication = (app: Application) => {
-    setSelectedApplication(app);
-  };
-
-  const handleBack = () => setSelectedApplication(null);
-
-  const handleApprove = (appId: string) => {
-    setApplications((prev) =>
-      prev.map((app) =>
-        app.id === appId ? { ...app, status: 'approved' } : app
-      )
-    );
-    if (selectedApplication?.id === appId) {
-      setSelectedApplication({ ...selectedApplication, status: 'approved' });
-    }
-  };
-
-  const handleReject = (appId: string) => {
-    setApplications((prev) =>
-      prev.map((app) =>
-        app.id === appId ? { ...app, status: 'rejected' } : app
-      )
-    );
-    if (selectedApplication?.id === appId) {
-      setSelectedApplication({ ...selectedApplication, status: 'rejected' });
-    }
-  };
+  const {
+    applications,
+    selectedApplication,
+    selectApplication,
+    goBack,
+    approve,
+    reject,
+  } = useApplications();
 
   return selectedApplication ? (
     <ApplicationDetails
       application={selectedApplication}
-      onBack={handleBack}
-      onApprove={handleApprove}
-      onReject={handleReject}
+      onBack={goBack}
+      onApprove={approve}
+      onReject={reject}
     />
   ) : (
     <ApplicationsPage
-      onSelectApplication={handleSelectApplication}
       applications={applications}
+      onSelectApplication={selectApplication}
     />
   );
 }

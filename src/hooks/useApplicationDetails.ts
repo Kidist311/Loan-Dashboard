@@ -56,3 +56,5 @@ export function useApplicationDetails(application: Application) {
     riskIndicators,
   };
 }
+
+//
