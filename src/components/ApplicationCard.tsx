@@ -1,4 +1,4 @@
-// components/ApplicationCard.tsx
+
 import React from 'react';
 import type { Application } from '../mock/applications';
 
